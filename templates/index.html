@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask GradientAI Integration</title>
+</head>
+<body>
+    <h1>Welcome to the Flask GradientAI Integration</h1>
+    <form id="prompt-form">
+        <label for="prompt">Enter your prompt:</label>
+        <input type="text" id="prompt" name="prompt">
+        <button type="submit">Generate</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('prompt-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const prompt = document.getElementById('prompt').value;
+            
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt: prompt }),
+            });
+            
+            const data = await response.json();
+            document.getElementById('response').innerText = data.response || data.error;
+        });
+    </script>
+</body>
+</html>
